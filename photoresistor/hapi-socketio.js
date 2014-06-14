@@ -22,8 +22,6 @@ internals.startServer = function () {
     var server = new Hapi.Server(3000);
 
     var helloHandler = function (request, reply) {
-
-        //reply('Hello');
       reply.file('./index.html');
     };
 
@@ -34,9 +32,12 @@ internals.startServer = function () {
         var io = SocketIO.listen(server.listener);
         io.on('connection', function(socket) {
           
-          //socket.emit('photoval', );
+          socket.on('val.post', function(data) {
+            socket.emit('val.render', data);
+          });
 
         });
+
     });
 };
 

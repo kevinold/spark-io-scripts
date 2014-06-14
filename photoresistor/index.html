@@ -10,19 +10,22 @@
 
   <body>
 
-  <div id="photoresistor"></div>
+  <h2 id="photoresistor"></h2>
 
+  <br>
+
+  <button id="updatebtn">Update Value</button>
+    
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io.connect('http://localhost:3000');
-    var val;
 
     function renderVal(data) {
-      $('#messages').prepend('<div><p>' + data.message + '</p><strong>'+ data.name +'</strong><hr/></div>');
+      $('#photoresistor').html(data.result);
     }
 
-    function checkVal(data) {
+    function findAndPostVal(data) {
   
       var deviceID = '53ff74065075535108331387';
       var accessToken = '660777918668e46b1473f742095915db2b5aa7cd';
@@ -30,13 +33,23 @@
       var requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + getFunc + "/?access_token=" + accessToken;
 
       $.getJSON(requestURL, function(json) {
+        socket.emit('val.post', json);
       });
+
     }
 
-    socket.on('news', function (data) {
-      //console.log(data);
+    socket.on('val.render', function (data) {
       renderVal(data);
-      //socket.emit('my other event', { my: 'data' });
+    });
+
+    $(function() {
+      findAndPostVal();
+      setInterval(function() {
+        findAndPostVal();
+      }, 2000);
+      $('#updatebtn').on('click', function() {
+        findAndPostVal();
+      });
     });
   </script>
   </body>
