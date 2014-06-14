@@ -1,0 +1,43 @@
+<html>
+
+  <head>
+    <title>Light!</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+
+  <div id="photoresistor"></div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost:3000');
+    var val;
+
+    function renderVal(data) {
+      $('#messages').prepend('<div><p>' + data.message + '</p><strong>'+ data.name +'</strong><hr/></div>');
+    }
+
+    function checkVal(data) {
+  
+      var deviceID = '53ff74065075535108331387';
+      var accessToken = '660777918668e46b1473f742095915db2b5aa7cd';
+      var getFunc = 'photoresisto';
+      var requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + getFunc + "/?access_token=" + accessToken;
+
+      $.getJSON(requestURL, function(json) {
+      });
+    }
+
+    socket.on('news', function (data) {
+      //console.log(data);
+      renderVal(data);
+      //socket.emit('my other event', { my: 'data' });
+    });
+  </script>
+  </body>
+</html>
