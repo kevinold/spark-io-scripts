@@ -8,31 +8,31 @@ board = new Spark({
 });
 //board = new five.Board();
 
-board.on("ready", function() {
-  console.log("CONNECTED");
 
-  // Create a new `photoresistor` hardware instance.
-  /*photoresistor = new five.Sensor({*/
-  /*pin: "A2",*/
-  /*freq: 250*/
-  /*});*/
-  board.analogRead("A2", function(data) {
-    console.log(data);
-  });
+/*board.on("ready", function() {*/
+/*console.log("CONNECTED");*/
 
-  // Inject the `sensor` hardware into
-  // the Repl instance's context;
-  // allows direct command line access
-  //board.repl.inject({
-  //  pot: photoresistor
-  //});
+/*// Create a new `photoresistor` hardware instance.*/
+/**//*photoresistor = new five.Sensor({*/
+/**//*pin: "A2",*/
+/**//*freq: 250*/
+/**//*});*/
+/*board.analogRead("A2", function(data) {*/
+/*console.log(data);*/
+/*});*/
 
-  // "data" get the current reading from the photoresistor
-  //photoresistor.on("data", function() {
-  //  console.log(this.value);
-  //});
-});
+/*// Inject the `sensor` hardware into*/
+/*// the Repl instance's context;*/
+/*// allows direct command line access*/
+/*//board.repl.inject({*/
+/*//  pot: photoresistor*/
+/*//});*/
 
+/*// "data" get the current reading from the photoresistor*/
+/*photoresistor.on("data", function() {*/
+/*console.log(this.value);*/
+/*});*/
+/*});*/
 
 // References
 //

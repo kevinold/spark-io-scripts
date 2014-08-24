@@ -11,6 +11,8 @@
 var Hapi = require('hapi');
 var SocketIO = require('socket.io');
 
+//require the Twilio module and create a REST client
+var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 // Declare internals
 
@@ -34,6 +36,20 @@ internals.startServer = function () {
           
           socket.on('val.post', function(data) {
             socket.emit('val.render', data);
+            if (data.result > 400) {
+              client.sendMessage({
+
+                to: process.env.TWILIO_TO_NUM,
+                from: process.env.TWILIO_FROM_NUM,
+                body: 'It is Dark' + data.result
+
+              }, function(err, responseData) {
+                if (!err) {
+                  console.log(responseData.from);
+                  console.log(responseData.body);
+                }
+              });
+            }
           });
 
         });
